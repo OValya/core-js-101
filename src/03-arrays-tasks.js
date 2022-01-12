@@ -363,8 +363,10 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-  throw new Error('Not implemented');
+function getItemsSum(arr) {
+  // throw new Error('Not implemented');
+  const sum = arr.reduce((prev, cur) => prev + cur, 0);
+  return sum;
 }
 
 /**
@@ -379,8 +381,11 @@ function getItemsSum(/* arr */) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  // throw new Error('Not implemented');
+  let init = 0;
+  const falsy = arr.reduce((p, c) => { if (Boolean(c) === false) init += 1; return init; }, init);
+  return falsy;
 }
 
 /**
@@ -397,8 +402,11 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  // throw new Error('Not implemented');
+  let init = 0;
+  const num = arr.reduce((p, c) => { if (c === item) init += 1; return init; }, init);
+  return num;
 }
 
 /**
@@ -412,8 +420,14 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  // throw new Error('Not implemented');
+  let init = '';
+  const str = arr.reduce((p, c, i) => {
+    if (i < arr.length - 1) { init += `${c.toString()},`; } else { init += c.toString(); }
+    return init;
+  }, init);
+  return str;
 }
 
 
