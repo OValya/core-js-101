@@ -271,8 +271,27 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  // throw new Error('Not implemented');
+  const str = ccn.toString();
+  const num = str.length;
+  const checkDigit = str[num - 1];
+  const strRev = str.split('').reverse().join('');
+  let newStr = '';
+  let mul;
+  for (let i = 1; i < strRev.length; i += 1) {
+    if (i % 2 === 0) {
+      mul = strRev[i];
+    } else {
+      mul = strRev[i] * 2;
+      if (mul > 9) {
+        mul -= 9;
+      }
+    }
+    newStr += mul;
+  }
+  const checkSum = newStr.split('').reduce((sum, cur) => +sum + +cur);
+  return (10 - (checkSum % 10)) % 10 === +checkDigit;
 }
 
 /**
@@ -289,8 +308,18 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  // throw new Error('Not implemented');
+  let sum = 0;
+  if (num < 9) {
+    sum = num;
+  } else {
+    const arr = num.toString().split('');
+    const summ = arr.reduce((prev, cur) => {
+      const res = +prev + +cur; return res;
+    }, 0); sum += getDigitalRoot(summ);
+  }
+  return sum;
 }
 
 
@@ -315,8 +344,32 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  // throw new Error('Not implemented');
+  const open = ['(', '{', '[', '<'];
+  const brackets = {
+    ')': '(',
+    '}': '{',
+    ']': '[',
+    '>': '<',
+  };
+  const stack = [];
+  let top;
+  for (let i = 0; i < str.length; i += 1) {
+    const cur = str[i];
+    if (open.includes(cur)) {
+      stack.push(cur);
+    } else {
+      if (stack.length === 0) {
+        return false;
+      }
+      top = stack[stack.length - 1];
+      if (brackets[cur] === top) {
+        stack.pop(cur);
+      }
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -340,8 +393,17 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  // throw new Error('Not implemented');
+  let rem = num;
+  let str = '';
+  while (rem >= n) {
+    str += (rem % n);
+    rem = Math.trunc(rem / n);
+  }
+  str += rem;
+  const res = str.split('').reverse().join('');
+  return res;
 }
 
 
@@ -380,8 +442,38 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // throw new Error('Not implemented');
+  const product = [];
+  let row;
+  let col;
+  if (m1.length === 1) {
+    product[0] = [];
+    let sum = 0;
+    [row] = m1;
+    for (let i = 0; i < m2.length; i += 1) {
+      sum += row[i] * m2[i];
+    }
+    product[0].push(sum);
+  } else {
+    for (let i = 0; i < m1.length; i += 1) {
+      product[i] = [];
+      row = m1[i];
+      for (let k = 0; k < row.length; k += 1) {
+        let sum = 0;
+        if (m1.length === 1) {
+          // sum += row[j] * col[k];
+        } else {
+          for (let j = 0; j < row.length; j += 1) {
+            col = m2[j];
+            sum += row[j] * col[k];
+          }
+        }
+        product[i].push(sum);
+      }
+    }
+  }
+  return product;
 }
 
 
